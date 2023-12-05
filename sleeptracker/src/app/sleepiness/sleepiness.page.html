@@ -1,0 +1,57 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Sleepiness</ion-title>
+  </ion-toolbar>
+  <!-- </ion-header> -->
+
+  <ion-content [fullscreen]="true">
+    <div class="icon-div">
+      <ion-icon id="sleepiness-icon" name="cloudy-night-outline"></ion-icon>
+    </div>
+    <h2 class="title">How sleepy are you?</h2>
+    <ion-list>
+      <ion-item>
+        <ion-select aria-label="Options" (ionChange)="onSelectChange($event)" interface="action-sheet"
+          placeholder="Select">
+          <ion-select-option value="1">1. Feeling active, vital, alert, or wide awake</ion-select-option>
+          <ion-select-option value="2">2. Functioning at high levels, but not at peak; able to
+            concentrate</ion-select-option>
+          <ion-select-option value="3">3. Awake, but relaxed; responsive but not fully alert</ion-select-option>
+          <ion-select-option value="4">4. Somewhat foggy, let down</ion-select-option>
+          <ion-select-option value="5">5. Foggy; losing interest in remaining awake; slowed down</ion-select-option>
+          <ion-select-option value="6">6. Sleepy, woozy, fighting sleep; prefer to lie down</ion-select-option>
+          <ion-select-option value="7">7. No longer fighting sleep, sleep onset soon; having dream-like
+            thoughts</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+
+    <div class="ion-text-center ion-padding">
+      <ion-button id="log-it" class="ion-text-center">
+        <ion-action-sheet trigger="log-it" header="Log Sleepiness" [buttons]="logSleepinessButton"></ion-action-sheet>
+        Log Sleepiness
+      </ion-button>
+    </div>
+
+    <div class="loggedSleepData">
+      <ion-list *ngFor="let data of this.AllSleepinessData">
+        <ion-card color="light">
+          <ion-card-header>
+            <ion-card-subtitle>{{data.timeString()}}</ion-card-subtitle>
+            <ion-card-title>{{data.dateString()}}</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+            {{data.summaryString()}}
+          </ion-card-content>
+
+          <!-- Delete and Upload Photo Buttons -->
+          <ion-button fill="clear" color="danger" (click)="ConfirmDelete(data)">Delete</ion-button>
+          <ion-button fill="clear" (click)="uploadPhoto(data)">Express it with a Photo!</ion-button>
+          <img style="max-width: 400px" [src]="data.photo" *ngIf="data.photo">
+        </ion-card>
+      </ion-list>
+
+    </div>
+
+  </ion-content>

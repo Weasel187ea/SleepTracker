@@ -1,0 +1,71 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Log Overnight Sleep</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <div class="icon-div">
+        <ion-icon id="home-icon" name="bed-outline"></ion-icon>
+      </div>
+        <ion-title class="title" size="large">Log Overnight Sleep</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <h2 style="text-align: center; margin-top: 40px;" >From</h2>
+
+    <div class="time1">
+      <ion-datetime-button displayFormat="M D, YY HH:mm:ss" datetime="datetime1"></ion-datetime-button>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime [showDefaultButtons]="true" doneText="All set" type="datetime-local" [(ngModel)]="sleepTime" id="datetime1"></ion-datetime>
+        </ng-template>
+      </ion-modal>
+    </div>
+    
+    <h2 style="text-align: center;">To</h2>
+    
+    <div class="time2">
+      <ion-datetime-button name="myDateTime" datetime="datetime2"></ion-datetime-button>
+      <ion-modal [keepContentsMounted]="true">
+        <ng-template>
+          <ion-datetime [showDefaultButtons]="true" doneText="All set" type="datetime-local" [(ngModel)]="wakeTime" id="datetime2" name="wakeTime"></ion-datetime>
+        </ng-template>
+      </ion-modal>
+    </div>
+
+    <div style="display: flex; justify-content: center; margin-top: 20px;">
+      <ion-button id="ConfirmAddTime"  style="width: 50%" color="primary">Add Time</ion-button>
+      <ion-action-sheet trigger="ConfirmAddTime" header="Log Sleep" [buttons]="logSleepButton"></ion-action-sheet>
+    </div>
+
+  <div class="divider"></div>
+
+  <div class="loggedSleepData">
+    <ion-list *ngFor="let data of this.allOvernightData; let i=index">
+      <ion-card color="light">
+        <ion-card-header>
+          <ion-card-subtitle>{{data.sleepStartString}}</ion-card-subtitle>
+          <ion-card-title>{{data.sleepStartDateString}}</ion-card-title>
+        </ion-card-header>
+      
+        <ion-card-header>
+          <ion-card-subtitle>{{data.sleepEndString}}</ion-card-subtitle>
+          <ion-card-title>{{data.sleepEndDateString}}</ion-card-title>
+        </ion-card-header>
+
+        <!-- Maybe implement user inputted note later?? -->
+        <!-- <ion-card-content>
+          Here's a small text description for the card content. Nothing more, nothing less.
+        </ion-card-content> -->
+
+        <ion-button id="deleteDataButton" fill="clear" (click)="ConfirmDelete(data)" color="danger">Delete</ion-button>
+        <!-- <ion-action-sheet trigger="deleteDataButton" header="delete Sleep" [buttons]="ConfirmDelete"></ion-action-sheet> -->
+      </ion-card>
+    </ion-list>
+  </div>
+</ion-content>
+
